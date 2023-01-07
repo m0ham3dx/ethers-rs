@@ -1,21 +1,16 @@
 name: book
 on:
   push:
-    branches: 
-      - master
-      - P1
+    branches: [master]
     paths:
       - 'book/**'
       - 'book.toml'
-      - '.github/workflows/*'
+
   pull_request:
-    branches: 
-      - master
-      - P1
+    branches: [master]
     paths:
       - 'book/**'
       - 'book.toml'
-      - '.github/workflows/*'
 
 jobs:
   build:
