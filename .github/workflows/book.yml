@@ -1,15 +1,21 @@
 name: book
 on:
   push:
-    branches: [master]
+    branches: 
+      - master
+      - P1
     paths:
       - 'book/**'
       - 'book.toml'
+      - '.github/workflows/*'
   pull_request:
-    branches: [master]
+    branches: 
+      - master
+      - P1
     paths:
       - 'book/**'
       - 'book.toml'
+      - '.github/workflows/*'
 
 jobs:
   build:
@@ -23,6 +29,8 @@ jobs:
         run: |
           mkdir mdbook
           curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.21/mdbook-v0.4.21-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=./mdbook
+          curl -sSL https://github.com/tommilligan/mdbook-admonish/releases/download/v1.8.0/mdbook-admonish-v1.8.0-x86_64-unknown-linux-gnu.tar.gz| tar -xz --directory=./mdbook
+          curl -sSL https://github.com/badboy/mdbook-mermaid/releases/download/v0.12.6/mdbook-mermaid-v0.12.6-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=./mdbook
           echo `pwd`/mdbook >> $GITHUB_PATH
 
       - name: Install mdbook-template
@@ -32,7 +40,10 @@ jobs:
           echo `pwd`/mdbook-template >> $GITHUB_PATH
 
       - name: Build
-        run: mdbook build
+        run: 
+          mdbook-admonish install 
+          mdbook-mermaid install
+          mdbook build
 
       - name: Save pages artifact
         uses: actions/upload-pages-artifact@v1
