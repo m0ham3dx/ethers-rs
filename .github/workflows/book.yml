@@ -40,7 +40,7 @@ jobs:
           echo `pwd`/mdbook-template >> $GITHUB_PATH
 
       - name: Build
-        run: 
+        run: |
           mdbook-admonish install 
           mdbook-mermaid install
           mdbook build
